@@ -1,0 +1,27 @@
+{
+    "version": 2,
+    "routes": [
+      {
+        "src": "/manifest.json",
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+        },
+        "continue": true
+      },
+      {
+        "src": "/api/(.*)",
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+        },
+        "continue": true
+      }
+    ],
+    "public": true,
+    "buildCommand": "npm run build",
+    "outputDirectory": "build",
+    "framework": "create-react-app"
+  }
