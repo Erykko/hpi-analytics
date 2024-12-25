@@ -1,6 +1,5 @@
 import BoardAnalytics from './components/BoardAnalytics';
 import './App.css';
-import './globals.css';  // This is for shadcn/ui styles
 
 function App() {
   return (
