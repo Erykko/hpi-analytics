@@ -69,11 +69,19 @@ const BoardAnalytics = () => {
       { name: "Over 1 Year", value: 8 }
     ]
   };
+  
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6 space-y-6">
+      <div className="flex justify-center mb-8">
+        <img 
+          src="/images/logo.png" 
+          alt="Heritage Hills Historical Preservation Inc." 
+          className="h-32 w-auto"
+        />
+      </div>
       <Card>
         <CardHeader>
           <CardTitle>Historical Preservation Inc. - Membership Analytics</CardTitle>
