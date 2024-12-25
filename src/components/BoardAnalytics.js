@@ -1,7 +1,49 @@
 import React from 'react';
 import { LineChart, Line, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, BarChart, Bar } from 'recharts';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+
+// Simple Card components since we don't have access to shadcn/ui
+const Card = ({ children, className = '' }) => (
+  <div className={`bg-white rounded-lg shadow-lg overflow-hidden ${className}`}>
+    {children}
+  </div>
+);
+
+const CardHeader = ({ children }) => (
+  <div className="px-6 py-4 border-b border-gray-200">
+    {children}
+  </div>
+);
+
+const CardTitle = ({ children }) => (
+  <h2 className="text-xl font-bold text-gray-800">
+    {children}
+  </h2>
+);
+
+const CardContent = ({ children }) => (
+  <div className="p-6">
+    {children}
+  </div>
+);
+
+// Simple Alert components
+const Alert = ({ children, variant = 'default' }) => (
+  <div className={`p-4 rounded-lg ${
+    variant === 'destructive' 
+      ? 'bg-red-50 text-red-900' 
+      : 'bg-blue-50 text-blue-900'
+  }`}>
+    {children}
+  </div>
+);
+
+const AlertTitle = ({ children }) => (
+  <div className="font-bold mb-1">{children}</div>
+);
+
+const AlertDescription = ({ children }) => (
+  <div className="text-sm">{children}</div>
+);
 
 const BoardAnalytics = () => {
   const membershipData = {
@@ -61,8 +103,9 @@ const BoardAnalytics = () => {
             </div>
           </div>
 
-          {/* Membership Distribution and Activity */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {/* Charts Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Distribution Chart */}
             <Card>
               <CardHeader>
                 <CardTitle>Membership Distribution</CardTitle>
@@ -92,6 +135,7 @@ const BoardAnalytics = () => {
               </CardContent>
             </Card>
 
+            {/* Activity Chart */}
             <Card>
               <CardHeader>
                 <CardTitle>Member Activity Timeline</CardTitle>
@@ -115,8 +159,8 @@ const BoardAnalytics = () => {
             </Card>
           </div>
 
-          {/* Critical Metrics and Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Metrics and Actions */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
             <Card>
               <CardHeader>
                 <CardTitle>Critical Metrics</CardTitle>
