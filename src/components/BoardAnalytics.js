@@ -371,30 +371,54 @@ const fetchData = useCallback(async (isRefresh = false) => {
   if (isRefresh) {
     setRefreshing(true);
   }
-  try {
-    console.log('Fetching data...');
-    const response = await fetch('/api/memberships');
-    console.log('Response status:', response.status);
-    
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error('API Error:', errorData);
-      throw new Error(`API error: ${response.status}`);
+  
+  const testData = {
+    metrics: {
+      totalMemberships: 792,
+      uniqueMembers: 248,
+      activitySegments: {
+        last7days: 22,
+        last30days: 106,
+        last90days: 197,
+        inactive90Plus: 467
+      },
+      membershipDistribution: {
+        singleMembership: 3,
+        twoMemberships: 76,
+        threePlusMemberships: 169
+      },
+      cancelledMemberships: 1,
+      renewalsPending: 660
+    },
+    memberData: {
+      "example@email.com": {
+        memberships: [
+          {
+            id: 1,
+            plan: "Standard",
+            status: "active",
+            expiration: new Date("2025-01-01")
+          }
+        ],
+        lastActive: new Date(),
+        joinDate: new Date("2023-08-25")
+      }
     }
+  };
 
-    const result = await response.json();
-    console.log('Data received:', result);
-    
-    const processedData = calculateMetrics(result);
-    setData(processedData);
+  try {
+    console.log('Starting data fetch...');
+    setData(testData);
     setLastUpdated(new Date());
     setError(null);
+    return Promise.resolve(testData);
   } catch (err) {
     console.error('Fetch error:', err);
-    setError(`Unable to fetch latest updates: ${err.message}`);
+    setError('Unable to fetch latest updates');
     if (!data) {
-      setData(calculateMetrics({ metrics: fallbackData }));
+      setData(testData);
     }
+    return Promise.reject(err);
   } finally {
     setLoading(false);
     setRefreshing(false);
