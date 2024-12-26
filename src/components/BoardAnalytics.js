@@ -366,5 +366,38 @@ const BoardAnalytics = () => {
     </div>
   );
 };
+{/* API CHECKS AND TROUBLESHOOT */}
+const fetchData = useCallback(async (isRefresh = false) => {
+  if (isRefresh) {
+    setRefreshing(true);
+  }
+  try {
+    console.log('Fetching data...');
+    const response = await fetch('/api/memberships');
+    console.log('Response status:', response.status);
+    
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('API Error:', errorData);
+      throw new Error(`API error: ${response.status}`);
+    }
 
+    const result = await response.json();
+    console.log('Data received:', result);
+    
+    const processedData = calculateMetrics(result);
+    setData(processedData);
+    setLastUpdated(new Date());
+    setError(null);
+  } catch (err) {
+    console.error('Fetch error:', err);
+    setError(`Unable to fetch latest updates: ${err.message}`);
+    if (!data) {
+      setData(calculateMetrics({ metrics: fallbackData }));
+    }
+  } finally {
+    setLoading(false);
+    setRefreshing(false);
+  }
+}, []);
 export default BoardAnalytics;
